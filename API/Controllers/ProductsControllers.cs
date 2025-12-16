@@ -1,28 +1,24 @@
-using System;
-using System.Collections;
-using System.Reflection.Metadata.Ecma335;
+using API.NewFolder;
 using Core.Entities;
 using Core.Interfaces;
 using Core.Specifications;
-using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers;
 
 
 
-[ApiController]
-[Route("api/[controller]")]
-public class ProductsController(IGenericRepository<Product> repo) : ControllerBase
+
+public class ProductsController(IGenericRepository<Product> repo) : BaseApiController
 {
     [HttpGet]
-    public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts(string?brand,string?type, string? sort)
+    public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts(
+        [FromQuery]ProductSpecParams specParams)
     {
-        var spec = new ProductSpecification(brand, type, sort);
+        var spec = new ProductSpecification(specParams);
 
-        var products = await repo.LisyAsync(spec);
-        return Ok(products);
+       
+        return await CreatePagedResult(repo, spec,specParams.PageIndex,specParams.PageSize);
     }
 
     [HttpGet("{id}")]
@@ -84,7 +80,7 @@ public class ProductsController(IGenericRepository<Product> repo) : ControllerBa
     {
         var spec = new BrandListSpecification();
 
-        return Ok(await repo.LisyAsync(spec));
+        return Ok(await repo.ListAsync(spec));
     }
 
 	[HttpGet("Types")]
@@ -93,7 +89,7 @@ public class ProductsController(IGenericRepository<Product> repo) : ControllerBa
 	{
         var spec = new TypeListSpecification();
 
-		return Ok(await repo.LisyAsync(spec));
+		return Ok(await repo.ListAsync(spec));
 	}
 
 	private bool ProductExists(int id)

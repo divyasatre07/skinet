@@ -52,7 +52,7 @@ public class ProductRepository(StoreContext context) : IProductRepository
                 "priceDesc" => query.OrderByDescending(x => x.Price),
                 _ => query.OrderBy(x => x.Name)
             };
-            return await query.ToListAsync();
+            return await query.Skip(5).Take(5).ToListAsync();
         }
     
 
