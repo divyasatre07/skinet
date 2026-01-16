@@ -9,32 +9,44 @@ namespace Core.Specifications
 {
 	public class ProductSpecification : BaseSpecification<Product>
 	{
-		public ProductSpecification(ProductSpecParams specParams): base(x=>
-		(string.IsNullOrEmpty(specParams.Search) || x.Name.ToLower().Contains(specParams.Search)&&
-		(!specParams.Brands.Any() || specParams.Brands.Contains(x.Brand)) &&
-		(!specParams.Types.Any() || specParams.Types.Contains(x.Type))
-		))
+		public ProductSpecification(ProductSpecParams specParams)
+    : base(x =>
+        (string.IsNullOrEmpty(specParams.Search) ||
+         x.Name.ToLower().Contains(specParams.Search.ToLower())) &&
 
-		{
-			AddOrderBy(p => p.Name);
+        (
+            (!specParams.Brands.Any() &&
+             !specParams.Types.Any()) ||
 
-			ApplyPaging(specParams.PageSize * (specParams.PageIndex - 1), specParams.PageSize);
+            specParams.Brands.Any(b => b.ToLower() == x.Brand.ToLower()) ||
+            specParams.Types.Any(t => t.ToLower() == x.Type.ToLower())
+        )
+    )
+{
+    // Default sorting
+    AddOrderBy(p => p.Name);
 
-			switch (specParams.Sort)
-			{
-				case "priceAsc":
-					AddOrderBy(x=>x.Price); 
-					break;
-				case "priceDecs":
-					AddOrderByDescending(x=>x.Price);
-					break;
-				default:
-					AddOrderBy(x => x.Name);
-					break;
-			}
-		}
-		
-			
-		}
+    // Pagination
+    ApplyPaging(
+        specParams.PageSize * (specParams.PageIndex - 1),
+        specParams.PageSize
+    );
+
+    // Sorting
+    switch (specParams.Sort)
+    {
+        case "priceAsc":
+            AddOrderBy(x => x.Price);
+            break;
+
+        case "priceDesc":
+            AddOrderByDescending(x => x.Price);
+            break;
+
+        default:
+            AddOrderBy(x => x.Name);
+            break;
+    }
+}
 	}
-
+}
