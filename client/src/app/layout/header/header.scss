@@ -11,3 +11,15 @@
   width: 56px;
   height: 56px;
 }
+
+a {
+  cursor: pointer;
+
+  &:hover {
+    color: #999;
+  }
+
+  &.active {
+    color: #7d00fa;
+  }
+}
