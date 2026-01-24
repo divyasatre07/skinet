@@ -1,13 +1,9 @@
 @if(products){
 <div class="flex flex-col gap-3">
   <div class="flex justify-between">
-    <mat-paginator (page)="handlePageEvent($event)" 
-    [length]="products.count" 
-    [pageSize]="shopParams.pageSize"
-    [showFirstLastButtons]="true" 
-    [pageSizeOptions]="pageSizeOptions" 
-    [pageIndex]="shopParams.pageNumber - 1"
-    aria-label="Select page">
+    <mat-paginator (page)="handlePageEvent($event)" [length]="products.count" [pageSize]="shopParams.pageSize"
+      [showFirstLastButtons]="true" [pageSizeOptions]="pageSizeOptions" [pageIndex]="shopParams.pageNumber - 1"
+      aria-label="Select page">
     </mat-paginator>
 
     <form #searchForm="ngForm" (ngSubmit)="onSearchChange()" class="relative flex items-center w-full max-w-md mx-4">
@@ -23,17 +19,15 @@
 
 
     <div class="flex gap-3">
-      <button class="match-input-height" mat-stroked-button color="primary" (click)="openFiltersDialog()">
+      <button mat-stroked-button color="primary" class="action-btn" (click)="openFiltersDialog()">
         <mat-icon>filter_list</mat-icon>
         Filters
       </button>
 
-      <button class="match-input-height" mat-stroked-button color="primary" [matMenuTriggerFor]="sortMenu">
+      <button mat-stroked-button color="primary" class="action-btn" [matMenuTriggerFor]="sortMenu">
         <mat-icon>swap_vert</mat-icon>
         Sort
       </button>
-
-
     </div>
 
   </div>

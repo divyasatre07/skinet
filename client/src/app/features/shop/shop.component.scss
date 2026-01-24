@@ -1,0 +1,16 @@
+.action-btn {
+  height: 44px;              // 👈 same as input
+  padding: 0 18px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.action-btn mat-icon {
+  font-size: 20px;
+}
+
+.action-btn:hover {
+  background-color: rgba(125, 0, 250, 0.04);
+}

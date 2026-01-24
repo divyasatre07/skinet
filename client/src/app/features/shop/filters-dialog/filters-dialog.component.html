@@ -1,42 +1,52 @@
 <div>
-    <h3 class="text-3xl text-center pt-6 mb-3">Filters</h3>
-    <mat-divider></mat-divider>
-    <div class="flex p-4">
-        <div class="w-1/2">
-            <h4 class="font-semibold text-xl text-primary"Brands></h4>
-            <mat-selection-list
-  #brandsList
-  [multiple]="true"
-  (selectionChange)="onBrandsChange($event)">
+  <h3 class="text-3xl text-center pt-6 mb-3">Filters</h3>
+  <mat-divider></mat-divider>
 
-  @for (brand of shopService.brands; track $index) {
-    <mat-list-option [value]="brand">
-      {{ brand }}
-    </mat-list-option>
-  }
-</mat-selection-list>
+  <div class="flex p-6 gap-8">
 
-        </div>
-         <div class="w-1/2">
-            <h4 class="font-semibold text-xl text-primary"Types></h4>
-            <mat-selection-list
-  #typesList
-  [multiple]="true"
-  (selectionChange)="onTypesChange($event)">
+    <!-- Brands -->
+    <div class="w-1/2">
+      <h4 class="font-semibold text-xl text-primary mb-3 text-center">
+        Brands
+      </h4>
 
-  @for (type of shopService.types; track $index) {
-    <mat-list-option [value]="type">
-      {{ type }}
-    </mat-list-option>
-  }
-</mat-selection-list>
-
+      <mat-selection-list
+        [multiple]="true"
+        (selectionChange)="onBrandsChange($event)">
+        @for (brand of shopService.brands; track $index) {
+          <mat-list-option [value]="brand">
+            {{ brand }}
+          </mat-list-option>
+        }
+      </mat-selection-list>
     </div>
-</div>
-<div class="flex justify-end p-4">
-    <button mat-stroked-button color="primary" (click)="applyFilters()">
-  Apply Filters
-</button>
 
-</div>
+    <!-- Types -->
+    <div class="w-1/2">
+      <h4 class="font-semibold text-xl text-primary mb-3 text-center">
+        Types
+      </h4>
+
+      <mat-selection-list
+        [multiple]="true"
+        (selectionChange)="onTypesChange($event)">
+        @for (type of shopService.types; track $index) {
+          <mat-list-option [value]="type">
+            {{ type }}
+          </mat-list-option>
+        }
+      </mat-selection-list>
+    </div>
+
+  </div>
+
+  <div class="flex justify-end p-4">
+    <button
+      mat-flat-button
+      color="primary"
+      class="apply-btn"
+      (click)="applyFilters()">
+      Apply Filters
+    </button>
+  </div>
 </div>

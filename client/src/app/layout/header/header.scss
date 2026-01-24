@@ -1,19 +1,13 @@
-/* Increase icon size */
 .cart-icon {
-  font-size: 36px !important;
-  width: 36px;
-  height: 36px;
-  line-height: 36px;
+  font-size: 32px;
+  width: 32px;
+  height: 32px;
 }
 
-/* Increase icon button container */
-::ng-deep .mat-mdc-icon-button {
-  width: 56px;
-  height: 56px;
-}
-
+/* Nav links */
 a {
   cursor: pointer;
+  transition: color 0.2s ease;
 
   &:hover {
     color: #999;

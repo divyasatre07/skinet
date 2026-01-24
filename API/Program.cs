@@ -1,10 +1,11 @@
 ﻿using Infrastructure.Data;
 using Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using API.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ✅ Database
+// Database
 builder.Services.AddDbContext<StoreContext>(options =>
 {
     options.UseSqlServer(
@@ -12,15 +13,15 @@ builder.Services.AddDbContext<StoreContext>(options =>
     );
 });
 
-// ✅ Repository registration (THIS FIXES THE ERROR)
+// Repository
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
-// services
+// Services
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// ✅ CORS
+// CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngular", policy =>
@@ -34,7 +35,9 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// middleware
+// 🔥 MUST BE FIRST
+app.UseMiddleware<ExceptionMiddleware>();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -43,10 +46,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// ✅ CORS must be before controllers
 app.UseCors("AllowAngular");
 
 app.UseAuthorization();
+
 app.MapControllers();
 
 app.Run();

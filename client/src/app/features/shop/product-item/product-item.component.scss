@@ -1,10 +1,14 @@
 .add-to-cart-text {
-  color: purple;   // 🔴 change text color here
+  color: purple;
 
   mat-icon {
-    color: purple; // icon color
+    color: purple;
+    font-size: 22px;   // ✅ change icon size here
+    width: 22px;
+    height: 22px;
   }
 }
+
 
 .product-card {
   transition : transform 0.2s, box-shadow 0.2s;

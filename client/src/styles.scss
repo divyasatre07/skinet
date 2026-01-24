@@ -1,17 +1,35 @@
-@use '@angular/material' as mat;
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
 
-:root {
-  @include mat.button-overrides((
-    filled-container-shape: 6px,
-    outlined-container-shape: 6px,
-    
-  ));
+/* normal CSS overrides only */
+.cart-btn {
+  position: relative;
 }
 
-.match-input-height{
+::ng-deep .cart-btn .mat-badge-content {
+  top: 8px !important;    /* move DOWN */
+  right: 8px !important; /* move LEFT */
+
+  font-size: 11px;
+  height: 18px;
+  min-width: 18px;
+  line-height: 18px;
+}
+
+
+.match-input-height {
   height: var(--mat-form-field-container-height) !important;
 }
 
 .mdc-notched-outline__notch {
   border-right-style: none !important;
+}
+
+.snack-error {
+  background-color: red;
+  color: white;
+}
+
+.snack-success {
+  background-color: green;
+  color: white;
 }
