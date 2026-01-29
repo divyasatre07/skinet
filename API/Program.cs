@@ -2,6 +2,10 @@
 using Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using API.Middleware;
+using StackExchange.Redis;
+using Microsoft.VisualBasic;
+using System.Data.Common;
+using Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +24,14 @@ builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepositor
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSingleton<IConnectionMultiplexer>(config =>
+{
+var connString = builder.Configuration.GetConnectionString("Redis") ?? throw new Exception("Cannot get redis connection string");
+    var configuration = ConfigurationOptions.Parse(connString , true);
+return ConnectionMultiplexer.Connect(configuration);
+});
+
+builder.Services.AddSingleton<ICartService, CartService>();
 
 // CORS
 builder.Services.AddCors(options =>
@@ -51,5 +63,7 @@ app.UseCors("AllowAngular");
 app.UseAuthorization();
 
 app.MapControllers();
+
+
 
 app.Run();
