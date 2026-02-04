@@ -7,8 +7,8 @@
         <p class="font-light">{{product.price | currency}}</p>
 
     </mat-card-content>
-    <mat-card-actions>
-        <button mat-raised-button class="w-full add-to-cart-text">
+    <mat-card-actions (click)="$event.stopPropagation()">
+        <button mat-raised-button class="w-full add-to-cart-text" (click)="cartService.addItemToCart(product)">
             <mat-icon>add_shopping_cart</mat-icon>
             Add to cart
         </button>

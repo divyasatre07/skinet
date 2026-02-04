@@ -1,35 +1,39 @@
 <header class="shadow-md w-full fixed top-0 z-50 bg-white">
   <div class="grid grid-cols-3 items-center px-6 h-20 max-w-screen-2xl mx-auto">
+    
     <!-- LEFT -->
     <div class="flex items-center">
       <img routerLink="/" src="/images/logo.png" alt="app logo" class="max-h-16 cursor-pointer" />
     </div>
 
-    <!-- CENTER (TRUE CENTER) -->
+    <!-- CENTER -->
     <nav class="flex justify-center gap-6 uppercase text-2xl font-bold">
-      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-        Home
-      </a>
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
       <a routerLink="/shop" routerLinkActive="active">Shop</a>
       <a routerLink="/test-error" routerLinkActive="active">Errors</a>
     </nav>
 
     <!-- RIGHT -->
     <div class="flex justify-end gap-3 items-center">
-     <button mat-icon-button class="cart-btn" matBadge="5" matBadgeOverlap="true">
-  <mat-icon class="cart-icon">shopping_cart</mat-icon>
-</button>
+      <button 
+        mat-icon-button 
+        class="cart-btn" 
+        matBadge="{{cartService.itemCount()}}" 
+        matBadgeOverlap="true"
+        routerLink="/cart"
+        routerLinkActive="active">
+        <mat-icon class="cart-icon">shopping_cart</mat-icon>
+      </button>
 
-
-
-
-
-      <button mat-stroked-button>Login</button>
-      <button mat-stroked-button>Register</button>
+      <button mat-stroked-button color="primary">Login</button>
+      <button mat-stroked-button color="primary">Register</button>
     </div>
   </div>
 
-  @if (busyService.loading) {
-  <mat-progress-bar mode="indeterminate" class="fixed top-20 z-50"></mat-progress-bar>
-  }
+  <!-- Loading bar at the top -->
+  <mat-progress-bar 
+    *ngIf="busyService.loading"
+    mode="indeterminate" 
+    class="fixed top-0 left-0 w-full z-50">
+  </mat-progress-bar>
 </header>

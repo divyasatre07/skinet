@@ -4,16 +4,23 @@
   height: 32px;
 }
 
-/* Nav links */
-a {
-  cursor: pointer;
-  transition: color 0.2s ease;
+.cart-btn {
+  position: relative; /* needed for absolute badge */
+}
 
-  &:hover {
-    color: #999;
-  }
-
-  &.active {
-    color: #7d00fa;
-  }
+/* Custom badge */
+.cart-btn .custom-badge {
+  position: absolute;
+  top: 4px;       /* tweak vertical position */
+  right: 2px;     /* tweak horizontal position */
+  background-color:blue;
+  color: white;
+  font-size: 11px;
+  height: 18px;
+  min-width: 18px;
+  line-height: 18px;
+  border-radius: 50%;
+  text-align: center;
+  padding: 0 4px;
+  font-weight: bold;
 }

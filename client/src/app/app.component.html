@@ -1,6 +1,11 @@
+<!-- Top loading line -->
+<div *ngIf="busyService.loading" 
+     style="position: fixed; top: 0; left: 0; width: 100%; text-align: center; z-index: 9999; background-color: #fff; padding: 4px 0;">
+  Loading...
+</div>
+
 <app-header></app-header>
 
 <main class="flex-1 w-full mt-24 px-6">
   <router-outlet></router-outlet>
 </main>
-
