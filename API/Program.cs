@@ -6,6 +6,7 @@ using StackExchange.Redis;
 using Microsoft.VisualBasic;
 using System.Data.Common;
 using Infrastructure.Services;
+using Core.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +38,9 @@ builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
 
 
 builder.Services.AddSingleton<ICartService, CartService>();
+builder.Services.AddAuthorization();
+builder.Services.AddIdentityApiEndpoints<AppUser>()
+   .AddEntityFrameworkStores<StoreContext>();
 
 // CORS
 builder.Services.AddCors(options =>
@@ -46,7 +50,8 @@ builder.Services.AddCors(options =>
         policy
             .WithOrigins("https://localhost:4200")
             .AllowAnyHeader()
-            .AllowAnyMethod();
+            .AllowAnyMethod()
+            .AllowCredentials();
     });
 });
 
@@ -65,9 +70,11 @@ app.UseHttpsRedirection();
 
 app.UseCors("AllowAngular");
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapGroup("api").MapIdentityApi<AppUser>(); //api/login
 
 
 
