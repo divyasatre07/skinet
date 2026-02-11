@@ -8,10 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace API.Controllers
+
 {
 	public class AccountController(SignInManager<AppUser> signInManager) : BaseApiController
 	{
-		
+
 
 		[HttpPost("register")]
 		public async Task<ActionResult> Register(RegisterDto registerDto)
@@ -61,9 +62,10 @@ namespace API.Controllers
 				user.Email,
 				Address = user.Address?.ToDto()
 
-			});		}
+			});
+		}
 
-		[HttpGet("auth-state")]
+		[HttpGet("auth-status")]
 		public ActionResult GetAuthState()
 		{
 			return Ok(new { IsAuthenticated = User.Identity?.IsAuthenticated ?? false });
@@ -76,21 +78,23 @@ namespace API.Controllers
 		{
 			var user = await signInManager.UserManager.GetUserByEmailWithAddress(User);
 
-		 if (user.Address == null)
-		 {
-			user.Address = addressDto.ToEntity();
-		 } 
-		else
-		{
+			if (user.Address == null)
+			{
+				user.Address = addressDto.ToEntity();
+			}
+			else
+			{
 				user.Address.UpdateFromDto(addressDto);
-		}
+			}
 
-		 var result = await signInManager.UserManager.UpdateAsync(user);
+			var result = await signInManager.UserManager.UpdateAsync(user);
 
 			if (!result.Succeeded) return BadRequest("Problem updating user address");
 
 			return Ok(user.Address.ToDto());
+
+
 		}
-		
+
 	}
 }

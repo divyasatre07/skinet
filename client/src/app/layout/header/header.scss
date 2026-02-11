@@ -24,3 +24,29 @@
   padding: 0 4px;
   font-weight: bold;
 }
+.user-email {
+  color: white;
+  background: #7b1fa2;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+}
+/* Soft lavender background like screenshot */
+.custom-menu {
+  background-color: #f3e5f5 !important;   /* very light purple */
+  border-radius: 12px !important;
+  padding: 6px 0 !important;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Menu text */
+.custom-menu .mat-mdc-menu-item {
+  color: #4a148c !important;  /* deep purple text */
+  font-weight: 500;
+}
+
+/* Hover effect (very soft) */
+.custom-menu .mat-mdc-menu-item:hover {
+  background-color: #e1bee7 !important;
+}

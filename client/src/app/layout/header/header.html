@@ -1,6 +1,6 @@
 <header class="shadow-md w-full fixed top-0 z-50 bg-white">
   <div class="grid grid-cols-3 items-center px-6 h-20 max-w-screen-2xl mx-auto">
-    
+
     <!-- LEFT -->
     <div class="flex items-center">
       <img routerLink="/" src="/images/logo.png" alt="app logo" class="max-h-16 cursor-pointer" />
@@ -15,25 +15,46 @@
 
     <!-- RIGHT -->
     <div class="flex justify-end gap-3 items-center">
-      <button 
-        mat-icon-button 
-        class="cart-btn" 
-        matBadge="{{cartService.itemCount()}}" 
-        matBadgeOverlap="true"
-        routerLink="/cart"
-        routerLinkActive="active">
+      <button mat-icon-button class="cart-btn" matBadge="{{cartService.itemCount()}}" matBadgeOverlap="true"
+        routerLink="/cart" routerLinkActive="active">
         <mat-icon class="cart-icon">shopping_cart</mat-icon>
       </button>
+      @if (accountService.currentUser()){
+    <button mat-button [matMenuTriggerFor]="menu" class="user-btn">
+  <mat-icon>arrow_drop_down</mat-icon>
+  <span class="user-email">
+    {{ accountService.currentUser()?.email }}
+  </span>
+</button>
+      } @else {
+      <button routerLink="/account/login" mat-stroked-button color="primary">Login</button>
+      <button routerLink="/account/register" mat-stroked-button color="primary">Register</button>
+      }
 
-      <button mat-stroked-button color="primary">Login</button>
-      <button mat-stroked-button color="primary">Register</button>
+
     </div>
   </div>
 
   <!-- Loading bar at the top -->
-  <mat-progress-bar 
-    *ngIf="busyService.loading"
-    mode="indeterminate" 
-    class="fixed top-0 left-0 w-full z-50">
+  <mat-progress-bar *ngIf="busyService.loading" mode="indeterminate" class="fixed top-0 left-0 w-full z-50">
   </mat-progress-bar>
 </header>
+
+<mat-menu #menu="matMenu" class="px-5" panelClass="custom-menu">
+  <button mat-menu-item routerLink="/cart">
+    <mat-icon>shopping_cart</mat-icon>
+    My Cart
+  </button>
+
+  <button mat-menu-item routerLink="/orders">
+    <mat-icon>history</mat-icon>
+    My orders
+  </button>
+
+  <mat-divider></mat-divider>
+
+  <button mat-menu-item (click)="logout()">
+    <mat-icon>logout</mat-icon>
+    Logout
+  </button>
+</mat-menu>
